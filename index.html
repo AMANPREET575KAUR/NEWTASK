@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskifyPro - Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: rgb(159, 117, 198);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 70px;
+            height: 70px;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        h1 {
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0;
+        }
+
+        nav {
+            background-color: rgb(159, 117, 198);
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav button {
+            background-color: white;
+            color: rgb(159, 117, 198);
+            border: 1px solid rgb(159, 117, 198);
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        nav button:hover {
+            background-color: rgb(158, 107, 205);
+            color: white;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 100px auto 20px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #adminDashboard {
+            display: block;
+        }
+
+        #employeeDashboard {
+            display: none; /* Hidden by default */
+        }
+
+        h2 {
+            color: #4a90e2;
+            margin-bottom: 15px;
+        }
+
+        .team-container {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e6e6e6;
+            border-radius: 8px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="unnamed.png" class="logo" alt="NexaTech Solutions Logo">
+        <h1>TaskifyPro</h1>
+        <nav>
+            <button onclick="showAdminDashboard()">Admin Dashboard</button>
+            <button onclick="showEmployeeDashboard()">Employee Dashboard</button>
+            <button onclick="logout()">Log Out</button>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard" class="dashboard">
+            <h2>Admin Dashboard</h2>
+            <!-- Section for each team -->
+            <div id="teamsOverview"></div>
+        </div>
+
+        <!-- Employee Dashboard -->
+        <!-- No content here; it will be loaded by redirect -->
+    </div>
+
+    <script>
+    // Mock user database for demonstration
+    const users = [
+        { id: 1, username: 'admin', password: 'admin123', role: 'admin' },
+        { id: 2, username: 'john', password: 'john123', role: 'employee' },
+        { id: 3, username: 'jane', password: 'jane123', role: 'employee' },
+        { id: 4, username: 'bob', password: 'bob123', role: 'employee' },
+        { id: 5, username: 'alice', password: 'alice123', role: 'employee' },
+        { id: 6, username: 'david', password: 'david123', role: 'employee' },
+        { id: 7, username: 'eve', password: 'eve123', role: 'employee' },
+        { id: 8, username: 'charlie', password: 'charlie123', role: 'employee' }
+    ];
+
+    // Mock task database
+    let tasks = [
+        { id: 1, title: 'Develop new feature', assignedTo: 2, status: 'In Progress', deadline: '2024-09-20' },
+        { id: 2, title: 'Fix bug in login system', assignedTo: 3, status: 'Pending', deadline: '2024-09-22' },
+        { id: 3, title: 'Update documentation', assignedTo: 4, status: 'Completed', deadline: '2024-09-10' }
+    ];
+
+    // Mock teams database
+    const teams = [
+        { id: 1, name: 'Team Developer', members: [2, 3, 4, 5] },
+        { id: 2, name: 'Team Coder', members: [6, 7, 8, 2] },
+        { id: 3, name: 'Web Developer', members: [3, 4, 5, 6] },
+        { id: 4, name: 'Blockchain Team', members: [7, 8, 2, 3] }
+    ];
+
+    function login() {
+        const username = prompt("Enter your username:");
+        const password = prompt("Enter your password:");
+
+        const user = users.find(u => u.username === username && u.password === password);
+
+        if (user) {
+            alert("Login successful!");
+            if (user.role === 'admin') {
+                document.getElementById('adminDashboard').style.display = 'block';
+                renderTeamsOverview();
+            } else {
+                window.location.href = 'employee-dashboard.html'; // Redirect to employee dashboard
+            }
+        } else {
+            alert("Invalid credentials.");
+        }
+    }
+
+    function renderTeamsOverview() {
+        const teamsOverview = document.getElementById('teamsOverview');
+        teamsOverview.innerHTML = '';
+
+        teams.forEach(team => {
+            const teamDiv = document.createElement('div');
+            teamDiv.className = 'team-container';
+
+            const teamMembers = team.members.map(memberId => {
+                const member = users.find(user => user.id === memberId);
+                return member ? member.username : 'Unknown';
+            }).join(', ');
+
+            const teamTasks = tasks.filter(task => team.members.includes(task.assignedTo));
+            const teamTable = `
+                <h3>${team.name}</h3>
+                <p>Members: ${teamMembers || 'None'}</p>
+                <table>
+                    <tr>
+                        <th>Task Title</th>
+                        <th>Assigned To</th>
+                        <th>Status</th>
+                        <th>Deadline</th>
+                    </tr>
+                    ${teamTasks.map(task => `
+                        <tr>
+                            <td>${task.title}</td>
+                            <td>${users.find(user => user.id === task.assignedTo)?.username || 'Unknown'}</td>
+                            <td>${task.status}</td>
+                            <td>${task.deadline}</td>
+                        </tr>
+                    `).join('')}
+                </table>
+            `;
+
+            teamDiv.innerHTML = teamTable;
+            teamsOverview.appendChild(teamDiv);
+        });
+    }
+
+    function showAdminDashboard() {
+        document.getElementById('adminDashboard').style.display = 'block';
+        document.getElementById('employeeDashboard').style.display = 'none';
+         
+    }
+    function showEmployeeDashboard() {
+    window.location.href = 'emplyooe.html'; // Redirect to employee dashboard
+}
+
+    function logout() {
+        document.getElementById('adminDashboard').style.display = 'none';
+        document.getElementById('employeeDashboard').style.display = 'none';
+        login(); // Redirect back to login after logging out
+    }
+    function logout() {
+    // Clear any session or state data here if necessary
+    // For a simple case, just redirect to the login page
+    window.location.href = 'index.html'; // Redirect to the login or home page
+}
+
+
+
+    // Prompt for login when the page loads
+    window.onload = login;
+    </script>
+</body>
+</html>

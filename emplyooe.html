@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexaTech Solutions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        nav {
+            background-color: rgb(159, 117, 198);
+            color: white;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+            
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav .logo {
+            width: 30px;
+            height: 30px;
+            vertical-align: middle;
+        }
+        nav span {
+            font-size: 30px;
+            margin-left: 10px;
+        }
+        .dashboard {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 80px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        .team-section {
+            margin-bottom: 20px;
+        }
+        .team-section h2 {
+            margin-top: 0;
+        }
+        .team-member {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+        .team-member h3 {
+            margin: 0;
+        }
+        .task-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .task-list li {
+            background-color: #fff;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        .progress-bar {
+            height: 20px;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #ddd;
+            margin-top: 5px;
+            position: relative;
+        }
+        .progress-bar div {
+            height: 100%;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            line-height: 20px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .progress-bar[data-progress="70"] div {
+            background-color: #e57373; /* Red */
+        }
+        .progress-bar[data-progress="80"] div {
+            background-color: rgb(206, 206, 109); /* Pink */
+        }
+        .progress-bar[data-progress="60"] div {
+            background-color:bisque; /* Purple */
+        }
+        .progress-bar[data-progress="90"] div {
+            background-color: #64b5f6; /* Blue */
+        }
+        .progress-bar[data-progress="100"] div {
+            background-color: #4caf50; /* Green */
+        }
+        @media (max-width: 768px) {
+            nav .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            nav button {
+                margin-top: 10px;
+            }
+        }
+
+        .filter-section {
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    margin-top:100px;
+    width:1220px;
+}
+
+.filter-section label {
+    margin-right: 100px;
+}
+
+.filter-section select {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.task-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    width:1200px;
+}
+
+.task-form h2 {
+    margin-top: 0;
+}
+
+.task-form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.task-form input,
+.task-form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.task-form button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.task-form button:hover {
+    background-color: #45a049;
+}
+
+.search-section {
+    margin-bottom: 20px;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    width:1220px;
+}
+
+.search-section label {
+    margin-right: 10px;
+}
+
+.search-section input {
+    width: calc(100% - 110px);
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#profile-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    width:1200px;
+}
+
+#profile-section h2 {
+    margin-top: 0;
+}
+
+#profile-section p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div>
+                <img src="unnamed.png" class="logo" alt="NexaTech Solutions Logo">
+                <span>NexaTech Solutions</span>
+            </div>
+            <div>
+                <span id="user-info"></span>
+                <button id="logout-btn">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="filter-section">
+        <label for="filter-progress">Filter by progress:</label>
+        <select id="filter-progress">
+            <option value="all">All</option>
+            <option value="0-50">0% - 50%</option>
+            <option value="51-75">51% - 75%</option>
+            <option value="76-100">76% - 100%</option>
+        </select>
+    </div>
+
+    <div class="task-form">
+        <h2>Add New Task</h2>
+        <form id="add-task-form">
+            <label for="team-name">Team:</label>
+            <select id="team-name">
+                ${Object.keys(teams).map(teamName => `<option value="${teamName}">${Development}</option>`).join('')}
+                ${Object.keys(teams).map(teamName => `<option value="${teamName}">${Design}</option>`).join('')}
+                ${Object.keys(teams).map(teamName => `<option value="${teamName}">${Marketing}</option>`).join('')}
+                ${Object.keys(teams).map(teamName => `<option value="${teamName}">${Sales}</option>`).join('')}
+            </select>
+            <label for="member-name">Member:</label>
+            <input type="text" id="Member" required>
+            <label for="task-title">Task Title:</label>
+            <input type="text" id="task-title" required>
+            <label for="task-progress">Progress (%):</label>
+            <input type="number" id="task-progress" min="0" max="100" required>
+            <button type="submit">Add Task</button>
+        </form>
+
+        <label for="member-name">Member:</label>
+<select id="member-name" required>
+    <option value="">Select a member</option>
+</select>
+
+    </div>
+    
+
+    <div class="search-section">
+        <label for="task-search">Search Tasks:</label>
+        <input type="text" id="task-search" placeholder="Search tasks...">
+    </div>
+    
+    <div id="profile-section">
+        <h2>User Profile</h2>
+        <p><strong>Name:</strong> <span id="profile-name"></span></p>
+        <p><strong>Email:</strong> <span id="profile-email"></span></p>
+    </div>
+    
+    <div id="app">
+        
+
+        <div class="container">
+            <div id="employee-dashboard" class="dashboard">
+                <h2>Employee Dashboard</h2>
+                <div id="teams-container"></div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        // Mock database
+const teams = {
+    Development: [
+        { id: 1, name: 'John', tasks: [{ title: 'Develop new feature', progress: 100 }, { title: 'Fix bugs', progress: 100 }] },
+        { id: 2, name: 'Alice', tasks: [{ title: 'Code review', progress: 60 }, { title: 'Write documentation', progress: 90 }] },
+        { id: 3, name: 'Bob', tasks: [{ title: 'Database optimization', progress: 80 }, { title: 'API integration', progress: 80 }] },
+        { id: 4, name: 'Carol', tasks: [{ title: 'Frontend development', progress: 90 }, { title: 'Unit testing', progress: 60 }] }
+    ],
+    Design: [
+        { id: 5, name: 'David', tasks: [{ title: 'Create logo', progress: 90 }, { title: 'Design UI', progress: 70 }] },
+        { id: 6, name: 'Emma', tasks: [{ title: 'Sketch wireframes', progress: 100 }, { title: 'Develop prototypes', progress: 100 }] },
+        { id: 7, name: 'Frank', tasks: [{ title: 'Design icons', progress: 60 }, { title: 'Color scheme selection', progress: 80 }] },
+        { id: 8, name: 'Grace', tasks: [{ title: 'Design landing page', progress: 80 }, { title: 'User testing', progress: 80 }] }
+    ],
+    Marketing: [
+        { id: 9, name: 'Henry', tasks: [{ title: 'Social media campaign', progress: 60 }, { title: 'SEO optimization', progress: 80 }] },
+        { id: 10, name: 'Isabel', tasks: [{ title: 'Content creation', progress: 80 }, { title: 'Market research', progress: 100 }] },
+        { id: 11, name: 'Jack', tasks: [{ title: 'Ad design', progress: 90 }, { title: 'Email marketing', progress: 70 }] },
+        { id: 12, name: 'Karen', tasks: [{ title: 'Event planning', progress: 100 }, { title: 'Campaign analysis', progress: 60 }] }
+    ],
+    Sales: [
+        { id: 13, name: 'Larry', tasks: [{ title: 'Close Q3 sales', progress: 60 }, { title: 'Client follow-ups', progress: 60 }] },
+        { id: 14, name: 'Mary', tasks: [{ title: 'Lead generation', progress: 80 }, { title: 'Prepare sales report', progress: 70 }] },
+        { id: 15, name: 'Nathan', tasks: [{ title: 'Negotiations', progress: 100 }, { title: 'Sales strategy', progress: 60 }] },
+        { id: 16, name: 'Olivia', tasks: [{ title: 'Customer service', progress: 90 }, { title: 'Sales presentations', progress: 80 }] }
+    ]
+};
+
+// DOM elements
+const teamsContainer = document.getElementById('teams-container');
+const logoutBtn = document.getElementById('logout-btn');
+const userInfo = document.getElementById('user-info');
+const teamSelect = document.getElementById('team-name');
+const memberSelect = document.getElementById('member-name');
+const taskForm = document.getElementById('add-task-form');
+const filterProgress = document.getElementById('filter-progress');
+const taskSearch = document.getElementById('task-search');
+
+// Function to render teams
+function renderTeams(filterValue = 'all', searchText = '') {
+    teamsContainer.innerHTML = '';
+    Object.keys(teams).forEach(teamName => {
+        const team = teams[teamName];
+        const teamSection = document.createElement('div');
+        teamSection.classList.add('team-section');
+        teamSection.innerHTML = `<h2>${teamName}</h2>`;
+        
+        team.forEach(member => {
+            const memberDiv = document.createElement('div');
+            memberDiv.classList.add('team-member');
+            memberDiv.innerHTML = `
+                <h3>${member.name}</h3>
+                <strong>Tasks:</strong>
+                <ul class="task-list">
+                    ${member.tasks
+                        .filter(task => {
+                            if (searchText && !task.title.toLowerCase().includes(searchText)) return false;
+                            if (filterValue === 'all') return true;
+                            const [min, max] = filterValue.split('-').map(Number);
+                            return task.progress >= min && task.progress <= max;
+                        })
+                        .map(task => `
+                            <li>
+                                <strong>${task.title}</strong>
+                                <div class="progress-bar" data-progress="${task.progress}">
+                                    <div style="width: ${task.progress}%;">${task.progress}%</div>
+                                </div>
+                            </li>
+                        `).join('')}
+                </ul>
+                <p><strong>Total Tasks:</strong> ${member.tasks.length}</p>
+            `;
+            teamSection.appendChild(memberDiv);
+        });
+
+        teamsContainer.appendChild(teamSection);
+    });
+}
+
+// Function to handle task addition
+taskForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const teamName = teamSelect.value;
+    const memberId = parseInt(memberSelect.value);
+    const title = document.getElementById('task-title').value;
+    const progress = parseInt(document.getElementById('task-progress').value);
+
+    if (teamName && memberId && title && !isNaN(progress)) {
+        const member = teams[teamName].find(member => member.id === memberId);
+        if (member) {
+            member.tasks.push({ title, progress });
+            renderTeams();
+            alert('Your task has been added.');
+            // Clear form fields after adding the task
+            taskForm.reset();
+            memberSelect.innerHTML = '<option value="">Select a member</option>'; // Reset member select
+        } else {
+            alert('Selected member not found.');
+        }
+    } else {
+        alert('Please fill all fields correctly.');
+    }
+});
+
+// Function to handle logout
+function handleLogout() {
+    // Implement logout functionality
+    alert('Logout functionality not implemented');
+}
+
+// Function to filter tasks
+function filterTasks() {
+    const filterValue = filterProgress.value;
+    renderTeams(filterValue);
+}
+
+// Function to search tasks
+function searchTasks() {
+    const searchText = taskSearch.value.toLowerCase();
+    renderTeams(undefined, searchText);
+}
+
+// Function to handle team selection and update members dropdown
+teamSelect.addEventListener('change', () => {
+    const teamName = teamSelect.value;
+    const members = teams[teamName];
+    memberSelect.innerHTML = '<option value="">Select a member</option>' + members.map(member => `<option value="${member.id}">${member.name}</option>`).join('');
+});
+
+// Event listeners for filtering and searching
+filterProgress.addEventListener('change', filterTasks);
+taskSearch.addEventListener('input', searchTasks);
+
+// Function to show user profile
+function showProfile(user) {
+    document.getElementById('profile-name').textContent = user.name;
+    document.getElementById('profile-email').textContent = user.email;
+}
+
+// Example user profile information
+const user = { name: 'John Doe', email: 'john.doe@example.com' };
+showProfile(user);
+
+// Initialize the dashboard
+function showDashboard() {
+    userInfo.textContent = 'Employee Dashboard'; // Example text, replace as needed
+    renderTeams();
+}
+
+showDashboard();
+
+    </script>
+    
+</body>
+</html>
